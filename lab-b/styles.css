@@ -1,0 +1,87 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+  padding: 30px;
+}
+
+.todo-app {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.task-list {
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+.task-item {
+  display: grid;
+  grid-template-columns: 30px 1fr 150px 50px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px dashed #aaa;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.task-text {
+  cursor: pointer;
+  word-break: break-word;
+}
+
+.task-date {
+  cursor: pointer;
+  text-align: center;
+}
+
+.add-box {
+  display: grid;
+  grid-template-columns: 1fr 180px 100px;
+  gap: 10px;
+}
+
+.add-box input,
+.add-box button {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.delete-btn {
+  cursor: pointer;
+}
+
+.done .task-text {
+  text-decoration: line-through;
+  color: gray;
+}
+
+mark {
+  background: yellow;
+  padding: 0 2px;
+}
