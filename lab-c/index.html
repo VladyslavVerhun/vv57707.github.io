@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vladyslav Verhun (57707) - PTW LAB C</title>
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+    <link rel="stylesheet" href="styles.css" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h1>LAB C - Puzzle mapy</h1>
+
+        <div class="controls">
+            <button id="locateBtn">Moja lokalizacja</button>
+            <button id="downloadBtn">Pobierz mapę</button>
+        </div>
+
+        <p id="coords">Współrzędne: brak</p>
+        <p id="statusMessage"></p>
+
+        <div class="main-grid">
+            <div class="panel">
+                <h2>Mapa dynamiczna</h2>
+                <div id="map"></div>
+            </div>
+
+            <div class="panel">
+                <h2>Mapa rastrowa</h2>
+                <canvas id="rasterCanvas" width="400" height="400"></canvas>
+            </div>
+
+            <div class="panel">
+                <h2>Rozsypane puzzle</h2>
+                <div id="piecesContainer" class="pieces-container"></div>
+            </div>
+
+            <div class="panel">
+                <h2>Układanie puzzli</h2>
+                <div id="board" class="board"></div>
+            </div>
+        </div>
+
+        <canvas id="hiddenCanvas" width="400" height="400" style="display:none;"></canvas>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-image/leaflet-image.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

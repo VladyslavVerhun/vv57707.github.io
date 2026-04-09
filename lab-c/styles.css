@@ -1,0 +1,144 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  background: #1976d2;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover {
+  background: #1259a8;
+}
+
+#coords {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.panel {
+  background: white;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 15px;
+  min-height: 470px;
+  box-sizing: border-box;
+}
+
+#map,
+#rasterCanvas {
+  width: 400px;
+  height: 400px;
+  display: block;
+  margin: 0 auto;
+  border: 1px solid #999;
+  border-radius: 8px;
+}
+
+.pieces-container {
+  width: 408px;
+  height: 408px;
+  margin: 0 auto;
+  border: 2px dashed #999;
+  border-radius: 8px;
+  padding: 2px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(4, 100px);
+  gap: 2px;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.board {
+  width: 408px;
+  height: 408px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: repeat(4, 100px);
+  gap: 2px;
+  background: #444;
+  padding: 2px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+#statusMessage {
+  text-align: center;
+  font-weight: bold;
+  color: green;
+  min-height: 24px;
+  margin-bottom: 15px;
+}
+
+.slot {
+  width: 100px;
+  height: 100px;
+  background: #e0e0e0;
+  border: 1px dashed #888;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.puzzle-piece {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #333;
+  box-sizing: border-box;
+  cursor: grab;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.slot .puzzle-piece {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 950px) {
+  .main-grid {
+    grid-template-columns: 1fr;
+  }
+}
