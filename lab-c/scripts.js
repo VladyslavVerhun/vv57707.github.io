@@ -26,13 +26,32 @@ function initMap() {
   }).addTo(map);
 
   createBoard();
-  requestNotificationPermission();
   enablePiecesContainerDrop();
 }
 
-function requestNotificationPermission() {
-  if ("Notification" in window) {
-    Notification.requestPermission();
+async function ensureNotificationPermission() {
+  if (!("Notification" in window)) {
+    console.log("Ta przeglądarka nie obsługuje Notification API.");
+    return false;
+  }
+
+  if (Notification.permission === "granted") {
+    console.log("Powiadomienia już są dozwolone.");
+    return true;
+  }
+
+  if (Notification.permission === "denied") {
+    console.log("Powiadomienia są zablokowane w ustawieniach przeglądarki.");
+    return false;
+  }
+
+  try {
+    const permission = await Notification.requestPermission();
+    console.log("Wynik prośby o powiadomienia:", permission);
+    return permission === "granted";
+  } catch (error) {
+    console.error("Błąd przy proszeniu o zgodę na powiadomienia:", error);
+    return false;
   }
 }
 
@@ -108,9 +127,11 @@ function handleDropToSlot(e) {
 function showWinNotification() {
   statusMessageEl.textContent = "Brawo! Wszystkie puzzle zostały poprawnie ułożone!";
 
+  console.log("Notification.permission =", ("Notification" in window) ? Notification.permission : "brak API");
+
   if ("Notification" in window && Notification.permission === "granted") {
-    new Notification("Brawo!", {
-      body: "Wszystkie puzzle zostały poprawnie ułożone!"
+    new Notification("LAB C - Sukces!", {
+      body: "Mapa została ułożona poprawnie!"
     });
   } else {
     alert("Brawo! Wszystkie puzzle zostały poprawnie ułożone!");
@@ -163,7 +184,8 @@ function getUserLocation() {
         map.removeLayer(marker);
       }
 
-      marker = L.marker([lat, lng]).addTo(map)
+      marker = L.marker([lat, lng])
+        .addTo(map)
         .bindPopup("Twoja lokalizacja")
         .openPopup();
     },
@@ -260,6 +282,10 @@ function shuffleArray(array) {
 }
 
 locateBtn.addEventListener("click", getUserLocation);
-downloadBtn.addEventListener("click", captureMap);
+
+downloadBtn.addEventListener("click", async () => {
+  await ensureNotificationPermission();
+  captureMap();
+});
 
 initMap();
