@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vladyslav Verhun (57707) - PTW LAB D</title>
+
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+
+<div class="page-wrapper">
+    <header class="app-header">
+        <div>
+            <p class="lab-label">PTW LAB D</p>
+            <h1>Weather REST API Client</h1>
+            <p class="subtitle">
+                Sprawdź aktualną pogodę oraz prognozę dla wybranego miasta.
+            </p>
+        </div>
+    </header>
+
+    <main class="weather-app">
+        <section class="search-panel">
+            <label for="cityInput">Podaj miasto:</label>
+
+            <div class="search-row">
+                <input
+                    type="text"
+                    id="cityInput"
+                    placeholder="np. Szczecin, Poland"
+                    value="Szczecin, Poland"
+                >
+
+                <button id="checkButton">Check!</button>
+            </div>
+
+            <p id="statusText" class="status-text">
+                Wpisz nazwę miasta i kliknij przycisk.
+            </p>
+        </section>
+
+        <section class="current-weather-section">
+            <h2>Aktualna pogoda</h2>
+
+            <div id="currentWeather" class="current-weather empty-box">
+                Brak danych. Wyszukaj miasto.
+            </div>
+        </section>
+
+        <section class="forecast-section">
+            <h2>Prognoza pogody</h2>
+
+            <div id="forecastWeather" class="forecast-grid">
+                <div class="empty-box">Brak prognozy.</div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="scripts.js"></script>
+</body>
+</html>
