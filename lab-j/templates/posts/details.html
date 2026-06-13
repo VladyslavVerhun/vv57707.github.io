@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Post Details{% endblock %}
+
+{% block content %}
+    <h1>Post Details</h1>
+
+    <p><strong>ID:</strong> {{ post.id }}</p>
+    <p><strong>Title:</strong> {{ post.title }}</p>
+    <p><strong>Content:</strong> {{ post.content }}</p>
+
+    <a href="/posts">Back to list</a>
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Flask CRUD{% endblock %}</title>
+</head>
+<body>
+    <nav>
+        <a href="/posts">Posts List</a>
+        |
+        <a href="/posts/create">Create Post</a>
+    </nav>
+
+    <hr>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
