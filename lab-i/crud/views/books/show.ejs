@@ -1,0 +1,25 @@
+<%- include('../partials/header', { title: 'Book Details' }) %>
+
+<section class="detail-card">
+  <h1>Book Details</h1>
+
+  <dl>
+    <dt>ID</dt>
+    <dd><%= book.id %></dd>
+    <dt>Title</dt>
+    <dd><%= book.title %></dd>
+    <dt>Author</dt>
+    <dd><%= book.author %></dd>
+    <dt>Published year</dt>
+    <dd><%= book.published_year %></dd>
+    <dt>Genre</dt>
+    <dd><%= book.genre %></dd>
+  </dl>
+
+  <div class="button-row">
+    <a class="button" href="/books">Back to list</a>
+    <a class="button warning" href="/books/<%= book.id %>/edit">Edit</a>
+  </div>
+</section>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Book index{% endblock %}
+
+{% block body %}
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h1 class="mb-1">Book index</h1>
+            <p class="text-muted mb-0">Custom Book model CRUD in Symfony</p>
+        </div>
+        <a href="{{ path('app_book_new') }}" class="btn btn-primary">Create new book</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered align-middle">
+            <thead class="table-dark">
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Genre</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for book in books %}
+                <tr>
+                    <td>{{ book.id }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.publishedYear }}</td>
+                    <td>{{ book.genre }}</td>
+                    <td class="text-nowrap">
+                        <a href="{{ path('app_book_show', {'id': book.id}) }}" class="btn btn-sm btn-info">show</a>
+                        <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="btn btn-sm btn-warning">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

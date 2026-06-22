@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect
+from flask import Flask, redirect, render_template, request
 
 app = Flask(__name__)
 DATABASE = "data.db"
@@ -15,22 +15,30 @@ def init_db():
     conn = get_db_connection()
 
     conn.execute("""
-        CREATE TABLE IF NOT EXISTS posts (
+        CREATE TABLE IF NOT EXISTS books (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
-            content TEXT NOT NULL
+            author TEXT NOT NULL,
+            published_year INTEGER NOT NULL,
+            genre TEXT NOT NULL
         )
     """)
 
-    count = conn.execute("SELECT COUNT(*) FROM posts").fetchone()[0]
+    count = conn.execute("SELECT COUNT(*) FROM books").fetchone()[0]
 
     if count == 0:
-        conn.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
-                     ("Pierwszy post", "Treść pierwszego posta"))
-        conn.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
-                     ("Drugi post", "Treść drugiego posta"))
-        conn.execute("INSERT INTO posts (title, content) VALUES (?, ?)",
-                     ("Trzeci post", "Treść trzeciego posta"))
+        conn.execute(
+            "INSERT INTO books (title, author, published_year, genre) VALUES (?, ?, ?, ?)",
+            ("The Hobbit", "J.R.R. Tolkien", 1937, "Fantasy"),
+        )
+        conn.execute(
+            "INSERT INTO books (title, author, published_year, genre) VALUES (?, ?, ?, ?)",
+            ("Solaris", "Stanislaw Lem", 1961, "Science fiction"),
+        )
+        conn.execute(
+            "INSERT INTO books (title, author, published_year, genre) VALUES (?, ?, ?, ?)",
+            ("Clean Code", "Robert C. Martin", 2008, "Programming"),
+        )
 
     conn.commit()
     conn.close()
@@ -38,72 +46,88 @@ def init_db():
 
 @app.route("/")
 def home():
-    return "Aplikacja Flask CRUD działa poprawnie"
+    return redirect("/books")
 
 
-@app.route("/posts")
-def posts_list():
+@app.route("/books")
+def books_list():
     conn = get_db_connection()
-    posts = conn.execute("SELECT * FROM posts").fetchall()
+    books = conn.execute("SELECT * FROM books ORDER BY id").fetchall()
     conn.close()
 
-    return render_template("posts/list.html", posts=posts)
+    return render_template("books/list.html", books=books)
 
-@app.route("/posts/<int:post_id>")
-def post_details(post_id):
+
+@app.route("/books/<int:book_id>")
+def book_details(book_id):
     conn = get_db_connection()
-    post = conn.execute("SELECT * FROM posts WHERE id = ?", (post_id,)).fetchone()
+    book = conn.execute("SELECT * FROM books WHERE id = ?", (book_id,)).fetchone()
     conn.close()
 
-    return render_template("posts/details.html", post=post)
+    if book is None:
+        return "Book not found", 404
 
-@app.route("/posts/create", methods=["GET", "POST"])
-def post_create():
+    return render_template("books/details.html", book=book)
+
+
+@app.route("/books/create", methods=["GET", "POST"])
+def book_create():
     if request.method == "POST":
         title = request.form["title"]
-        content = request.form["content"]
+        author = request.form["author"]
+        published_year = request.form["published_year"]
+        genre = request.form["genre"]
 
         conn = get_db_connection()
         conn.execute(
-            "INSERT INTO posts (title, content) VALUES (?, ?)",
-            (title, content)
+            "INSERT INTO books (title, author, published_year, genre) VALUES (?, ?, ?, ?)",
+            (title, author, published_year, genre),
         )
         conn.commit()
         conn.close()
 
-        return redirect("/posts")
+        return redirect("/books")
 
-    return render_template("posts/create.html")
+    return render_template("books/create.html")
 
-@app.route("/posts/<int:post_id>/edit", methods=["GET", "POST"])
-def post_edit(post_id):
+
+@app.route("/books/<int:book_id>/edit", methods=["GET", "POST"])
+def book_edit(book_id):
     conn = get_db_connection()
-    post = conn.execute("SELECT * FROM posts WHERE id = ?", (post_id,)).fetchone()
+    book = conn.execute("SELECT * FROM books WHERE id = ?", (book_id,)).fetchone()
+
+    if book is None:
+        conn.close()
+        return "Book not found", 404
 
     if request.method == "POST":
         title = request.form["title"]
-        content = request.form["content"]
+        author = request.form["author"]
+        published_year = request.form["published_year"]
+        genre = request.form["genre"]
 
         conn.execute(
-            "UPDATE posts SET title = ?, content = ? WHERE id = ?",
-            (title, content, post_id)
+            "UPDATE books SET title = ?, author = ?, published_year = ?, genre = ? WHERE id = ?",
+            (title, author, published_year, genre, book_id),
         )
         conn.commit()
         conn.close()
 
-        return redirect("/posts")
+        return redirect("/books")
 
     conn.close()
-    return render_template("posts/edit.html", post=post)
+    return render_template("books/edit.html", book=book)
 
-@app.route("/posts/<int:post_id>/delete", methods=["POST"])
-def post_delete(post_id):
+
+@app.route("/books/<int:book_id>/delete", methods=["POST"])
+def book_delete(book_id):
     conn = get_db_connection()
-    conn.execute("DELETE FROM posts WHERE id = ?", (post_id,))
+    conn.execute("DELETE FROM books WHERE id = ?", (book_id,))
     conn.commit()
     conn.close()
 
-    return redirect("/posts")
+    return redirect("/books")
+
 
 if __name__ == "__main__":
     init_db()

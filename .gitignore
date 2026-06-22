@@ -1,1 +1,6 @@
 .idea
+node_modules/
+__pycache__/
+*.pyc
+.codex_pydeps/
+lab-i/crud/data.db
